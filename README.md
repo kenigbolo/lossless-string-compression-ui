@@ -1,6 +1,13 @@
+# DEVELOPERS GUIDE
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
-First begin by running `yarn install` or `npm install` to install the needed dependencies
+## Getting Started
+
+- Clone the application with
+  `git clone https://github.com/kenigbolo/lossless-string-compression-ui.git` or use
+  ssh `git clone git@github.com:kenigbolo/lossless-string-compression-ui.git`.
+
+To begin, first start by running `yarn install` or `npm install` to install the needed dependencies
 
 > ⚠️ This project requires the server at https://github.com/kenigbolo/lossless-string-compression to be running
 
