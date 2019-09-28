@@ -1,9 +1,11 @@
 import React, { Component } from 'react';
-import { postData } from '../helpers';
+import { postData, postFile } from '../helpers';
 
 class Form extends Component {
   constructor(props) {
     super(props);
+
+    this.fileInput = React.createRef();
 
     this.initialState = {
       stringValue: '',
@@ -34,7 +36,12 @@ class Form extends Component {
       ></textarea>;
     } else {
       // Available on (IE 10+, Edge, Chrome, Firefox 42+)
-      return <input type="file" accept=".txt" className="mb-20" />;
+      return <input
+        type="file"
+        accept=".txt"
+        className="mb-20"
+        ref={this.fileInput}
+      />;
     }
   };
 
@@ -49,6 +56,12 @@ class Form extends Component {
   }
 
   makeRequest = async () => {
+    return this.state.inputType === 'comma'
+      ? this.uploadStrings()
+      : this.uploadFile();
+  };
+
+  uploadStrings = async () => {
     const { stringValue } = this.state;
     if (!stringValue) return alert('Please enter a valid string');
     const { action, handleSubmit } = this.props;
@@ -60,7 +73,21 @@ class Form extends Component {
     } catch (error) {
       throw new Error(error);
     }
-  };
+  }
+
+  uploadFile = async () => {
+    const textFile = this.fileInput.current.files[0];
+    const formData = new FormData();
+    formData.append('file', textFile)
+    const { action, handleSubmit } = this.props;
+    const endpoint = this.state.endpoints[action];
+    try {
+      const data = await postFile(`http://localhost:9000/${endpoint}`, formData);
+      handleSubmit(data.toString());
+    } catch (error) {
+      throw new Error(error);
+    }
+  }
 
   render() {
     const { stringValue } = this.state;
