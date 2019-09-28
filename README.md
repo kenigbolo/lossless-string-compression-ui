@@ -42,14 +42,26 @@ See the section about [deployment](https://facebook.github.io/create-react-app/d
 > 🚨 No strict checking is done for string values passed. For the compression/decompression to work properly please use
 > comma seperated strings with no spaces inbetween the commas.
 
-## Sample Compression String
+## Compression/Decompression
+
+Compression/Decompression can be done through this UI via regular `.txt` file upload or by pasting a comma formatted string
+
+### Sample Compression String - Comma Formatted
 
 ```javascript
 myxa,myxophyta,myxopod,nab,nabbed,nabbing,nabit,nabk,nabob,nacarat,nacelle
 ```
 
-## Sample Decompression String
+### Sample Decompression String - Comma Formatted
 
 ```javascript
 0 myxa,3 ophyta,5 od,0 nab,3 bed,4 ing,3 it,3 k,3 ob,2 carat,3 elle
 ```
+
+### Sample Upload File - Compression
+
+`https://github.com/kenigbolo/lossless-string-compression/blob/master/compress.txt`
+
+### Sample Upload File - Decompression
+
+`https://github.com/kenigbolo/lossless-string-compression/blob/master/decompress.txt`
