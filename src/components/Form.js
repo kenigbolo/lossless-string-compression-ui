@@ -21,36 +21,55 @@ class Form extends Component {
     this.setState({ [name]: value });
   };
 
+  toggleInputType = (stringValue) => {
+    const { inputType } = this.props;
+    if (inputType === 'comma') {
+      return <textarea
+        name="stringValue"
+        id="appId"
+        rows="4"
+        cols="50"
+        value={stringValue}
+        onChange={this.handleChange}
+      ></textarea>;
+    } else {
+      // Available on (IE 10+, Edge, Chrome, Firefox 42+)
+      return <input type="file" accept=".txt" className="mb-20" />;
+    }
+  };
+
+  toggleLabel = (action) => {
+    const { inputType } = this.props;
+    if (inputType === 'comma') {
+      const hint = 'comma separated with no spaces inbetween commas';
+      return <label>String for {action} - {hint}</label>
+    } else {
+      return <label>Select a properly formatted file with <b>.txt</b> entension</label>
+    }
+  }
+
   makeRequest = async () => {
     const { stringValue } = this.state;
-    const { action, handleSubmit } = this.props
     if (!stringValue) return alert('Please enter a valid string');
+    const { action, handleSubmit } = this.props;
     const endpoint = this.state.endpoints[action];
     const body = { data: { stringValue } };
     try {
       const { data } = await postData(`http://localhost:9000/${endpoint}`, body);
-      handleSubmit(data.toString())
+      handleSubmit(data.toString());
     } catch (error) {
-      throw new Error(error)
+      throw new Error(error);
     }
-  }
+  };
 
   render() {
     const { stringValue } = this.state;
     const { action } = this.props;
-    const hint = 'comma separated with no spaces inbetween commas';
     return (
       <section>
         <form>
-          <label>String for {action} - {hint}</label>
-          <textarea
-            name="stringValue"
-            id="appId"
-            rows="4"
-            cols="50"
-            value={stringValue}
-            onChange={this.handleChange}
-          ></textarea>
+          {this.toggleLabel(action)}
+          {this.toggleInputType(stringValue, this.handleChange )}
           <br></br>
           <input
             className="btn--aito"
