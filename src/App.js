@@ -6,10 +6,14 @@ class App extends Component {
   state = {
     hash: '',
     action: 'compression',
+    inputType: 'comma',
   };
 
   setAction = event => {
     this.setState({ action: event.target.value });
+  };
+  setInputType = event => {
+    this.setState({ inputType: event.target.value });
   };
   /**
    * Function to copy results to clipboard
@@ -44,12 +48,13 @@ class App extends Component {
   }
 
   render() {
-    const { hash, action } = this.state;
+    const { hash, action, inputType } = this.state;
     return (
       <div className="container">
         <br></br>
-        <select>
+        <select onChange={this.setInputType}>
           <option value="comma">Comma Separated Strings</option>
+          <option value="fileUpload">File Upload</option>
         </select>
         <select onChange={this.setAction}>
           <option value="compression">Compression</option>
@@ -59,6 +64,7 @@ class App extends Component {
         <Form
           handleSubmit={this.handleSubmit}
           action={action}
+          inputType={inputType}
         />
         <br></br>
         <textarea
